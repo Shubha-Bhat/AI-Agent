@@ -39,7 +39,7 @@ class PureGeminiAgent:
         try:
             if hasattr(st, 'secrets') and 'GOOGLE_API_KEY' in st.secrets:
                 self.api_key = st.secrets['GOOGLE_API_KEY']
-                st.success("✅ API key loaded from Streamlit secrets")
+                st.success("✅ API key loaded")
         except Exception as e:
             pass
         
