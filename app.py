@@ -32,11 +32,46 @@ if "tfidf_matrix" not in st.session_state:
 
 class PureGeminiAgent:
     def __init__(self):
-        self.api_key = os.getenv("GOOGLE_API_KEY")
-        if self.api_key:
-            genai.configure(api_key=self.api_key)
-        else:
-            st.error("❌ GOOGLE_API_KEY not found in .env file")
+        # Try multiple sources for API key
+        self.api_key = None
+        
+        # 1. Try Streamlit secrets first
+        try:
+            if hasattr(st, 'secrets') and 'GOOGLE_API_KEY' in st.secrets:
+                self.api_key = st.secrets['GOOGLE_API_KEY']
+                st.success("✅ API key loaded from Streamlit secrets")
+        except Exception as e:
+            pass
+        
+        # 2. Try environment variables as fallback
+        if not self.api_key:
+            self.api_key = os.getenv("GOOGLE_API_KEY")
+            if self.api_key:
+                st.success("✅ API key loaded from environment variables")
+        
+        # 3. If still no key, show error
+        if not self.api_key:
+            st.error("""
+            ❌ GOOGLE_API_KEY not found!
+            
+            **For Streamlit Cloud:**
+            1. Go to your app on share.streamlit.io
+            2. Click ••• (3 dots) → Settings
+            3. Click "Advanced settings"
+            4. Add this exact text:
+            
+            GOOGLE_API_KEY = "your_actual_api_key_here"
+            
+            **Make sure to include the quotes!**
+            
+            **For Local Development:**
+            1. Create a .env file
+            2. Add: GOOGLE_API_KEY=your_actual_api_key_here
+            """)
+            st.stop()
+        
+        # Configure Gemini with the found API key
+        genai.configure(api_key=self.api_key)
     
     def load_documents(self, file_paths):
         """Load and process documents without OpenAI dependencies"""
@@ -154,7 +189,7 @@ class PureGeminiAgent:
     def generate_answer(self, question, search_results):
         """Generate answer using Gemini with context from search results"""
         if not self.api_key:
-            return "API key not configured. Please check your .env file."
+            return "API key not configured. Please check your configuration."
         
         # Prepare context from search results
         context_parts = []
@@ -211,9 +246,6 @@ def main():
     
     # Initialize agent
     agent = PureGeminiAgent()
-    
-    if not agent.api_key:
-        st.stop()
     
     # Sidebar for document management
     with st.sidebar:
@@ -318,9 +350,7 @@ def main():
             1. **Upload documents** in the sidebar (PDF, TXT, DOCX, DOC)
             2. **Ask questions** about your documents
             3. **Get AI-powered answers** with source attribution
-            
             """)
-        
         
         st.stop()
     
@@ -376,7 +406,6 @@ def main():
 
     # Footer
     st.markdown("---")
-    
 
 if __name__ == "__main__":
     main()
