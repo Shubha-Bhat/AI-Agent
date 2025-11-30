@@ -1,0 +1,25 @@
+INFORMATION SECURITY POLICY
+Version 3.0
+
+PASSWORD REQUIREMENTS
+Minimum 12 characters, including uppercase, lowercase, numbers, and special characters. Password changes required every 90 days. Multi-factor authentication mandatory for all systems.
+
+DATA CLASSIFICATION
+Confidential: Financial data, client information, source code
+Internal: Project documents, internal communications
+Public: Marketing materials, company announcements
+
+ACCESS CONTROL
+Role-based access permissions. Least privilege principle enforced. Access reviews conducted quarterly. Former employee access revoked within 24 hours of departure.
+
+INCIDENT RESPONSE
+Security incidents must be reported immediately to security@company.com. Incident response team activates within 30 minutes. All incidents documented in security log.
+
+MOBILE DEVICE POLICY
+Company data only on approved mobile devices. Remote wipe capability enabled. Device encryption required. Lost devices must be reported within 2 hours.
+
+NETWORK SECURITY
+VPN required for remote access. Firewall rules reviewed monthly. Network segmentation implemented. Regular vulnerability scans conducted.
+
+COMPLIANCE REQUIREMENTS
+GDPR compliance for EU data. SOC 2 Type II certification maintained. Regular security awareness training required.

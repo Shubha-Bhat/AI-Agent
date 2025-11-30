@@ -1,0 +1,9 @@
+streamlit
+python-dotenv
+llama-index
+pypdf
+python-docx
+docx2txt
+openai
+sentence-transformers
+torch

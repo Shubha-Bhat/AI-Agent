@@ -1,0 +1,3 @@
+Employees get 15 days of vacation per year.
+Sick leave requires a doctor's note after 3 days.
+HR contact: hr@company.com
